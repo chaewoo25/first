@@ -40,3 +40,32 @@ Server: Docker Desktop 4.85.0 (235549)
   Version:          0.19.0
   GitCommit:        de40ad0
   ```
+  ```
+  Client: Docker Engine - Community
+ Version:    29.6.2
+ Context:    desktop-linux
+ Debug Mode: false
+
+Server:
+ Containers: 1
+  Running: 1
+  Paused: 0
+  Stopped: 0
+ Images: 1
+ Server Version: 29.6.2
+ Storage Driver: overlay2
+ Operating System: Docker Desktop
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 16
+ Total Memory: 15.54GiB
+ Name: docker-desktop
+ ```
+ ```
+ REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+nginx        latest    21f8c0e3416b   2 weeks ago    187MB
+```
+```
+CONTAINER ID   IMAGE   COMMAND                  CREATED          STATUS          PORTS                               NAMES
+a24ddec10034   nginx   "/docker-entrypoint.s…"   12 minutes ago   Up 12 minutes   0.0.0.0:80->80/tcp, [::]:80->80/tcp my-web-server
+```
