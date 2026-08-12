@@ -14,13 +14,12 @@
 
 | 구분 | 환경 명세 | 상세 내용 |
 | :--- | :--- | :--- |
-| **Host OS** | Windows 11 Home / Pro | 기본 가상화 지원 환경 |
-| **Virtualization** | WSL 2 (Windows Subsystem for Linux) | Ubuntu 기반 Linux 커널 가상화 |
-| **Container Engine** | Docker Desktop 4.85.0 | Engine Version 29.6.2 |
-| **IDE / Editor** | Visual Studio Code | Docker / Git Extension 연동 |
-| **CLI Terminal** | PowerShell / Windows Terminal | Git Bash 및 WSL 터미널 환경 |
-| **Version Control** | Git / GitHub | Remote Repository 동기화 완료 |
-
+| **Host OS** | Windows 11 Home |
+| **Virtualization** | WSL 2 (Windows Subsystem for Linux) |
+| **Container Engine** | Docker Desktop 4.85.0 |
+| **IDE / Editor** | Visual Studio Code |
+| **CLI Terminal** | PowerShell / Windows Terminal |
+| **Version Control** | Git / GitHub | 
 ---
 
 ## 🚀 3. Nginx 웹 서버 컨테이너 실행 및 옵션 분석
@@ -30,12 +29,6 @@
 docker run -d -p 80:80 --name my-web-server nginx
 ```
 
-### 3.2 명령어 옵션 상세 설명
-* `docker run`: 이미지를 로컬에서 탐색한 후, 존재하지 않을 경우 Docker Hub에서 다운로드(Pull)하여 새 컨테이너를 생성 및 실행합니다.
-* `-d` (--detach): 백그라운드 모드로 컨테이너를 구동하여 터미널이 세션에 묶이지 않고 독립적으로 실행되도록 합니다.
-* `-p 80:80` (--publish): Host OS의 `80`번 포트 요청을 컨테이너 내부의 `80`번 포트로 포워딩(Port Forwarding)합니다.
-* `--name my-web-server`: 랜덤으로 부여되는 컨테이너 ID 대신 관리하기 쉬운 직관적인 식별자 이름을 지정합니다.
-* `nginx`: 컨테이너를 생성할 기본 이미지명을 지정합니다. 태그 미지정 시 기본값인 `latest` 버전을 불러옵니다.
 
 ---
 
