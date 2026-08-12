@@ -12,14 +12,14 @@
 
 ## 💻 2. 개발 및 실습 환경 (Environment)
 
-| 구분 | 환경 명세 | 상세 내용 |
-| :--- | :--- | :--- |
-| **Host OS** | Windows 11 Home |
-| **Virtualization** | WSL 2 (Windows Subsystem for Linux) |
-| **Container Engine** | Docker Desktop 4.85.0 |
-| **IDE / Editor** | Visual Studio Code |
-| **CLI Terminal** | PowerShell / Windows Terminal |
-| **Version Control** | Git / GitHub | 
+| 구분 | 환경 명세 
+| :--- | :--- 
+| **Host OS** | Windows 11 Home 
+| **Virtualization** | WSL 2 (Windows Subsystem for Linux) 
+| **Container Engine** | Docker Desktop 4.85.0 
+| **IDE / Editor** | Visual Studio Code 
+| **CLI Terminal** | PowerShell / Windows Terminal 
+| **Version Control** | Git / GitHub
 ---
 
 ## 🚀 3. Nginx 웹 서버 컨테이너 실행 및 옵션 분석
