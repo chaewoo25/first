@@ -1,30 +1,49 @@
-# 코디세이 1주차 과제
-# 개발 환경 구축 및 Docker 웹 서버 실습
+# 코디세이 1주차 과제: 개발 환경 구축 및 Docker 웹 서버 실습 보고서
 
-## 👤 작성자 정보
-- **GitHub**: chaewoo25
+## 📌 1. 과제 개요 (Overview)
+본 과제는 최신 컨테이너 가상화 기술인 Docker를 활용하여 개발 환경을 구축하고, Nginx 웹 서버 컨테이너를 구동 및 제어하는 기본 실습을 목표로 합니다. WSL 2 기반 가상화 환경에서 Docker Engine 및 VSCode를 연동하고, 핵심 Docker 명령어를 통해 컨테이너 생태계의 동작 메커니즘을 분석 및 기록하였습니다.
 
----
-
-## 1. 개발 및 실습 환경
-- **OS**: Windows 11
-- **가상화 환경**: WSL 2 (Ubuntu)
-- **Container Runtime**: Docker Desktop 4.85.0
-- **IDE**: Visual Studio Code
+- **교육 과정**: 코디세이 AI All-in-One 2기
+- **작성자**: 본인 이름
+- **GitHub 계정**: chaewoo25
+- **저장소 주소**: https://github.com/chaewoo25/ia-codyssey
 
 ---
 
-## 2. Nginx 웹 서버 컨테이너 실행
+## 💻 2. 개발 및 실습 환경 (Environment)
 
+| 구분 | 환경 명세 | 상세 내용 |
+| :--- | :--- | :--- |
+| **Host OS** | Windows 11 Home / Pro | 기본 가상화 지원 환경 |
+| **Virtualization** | WSL 2 (Windows Subsystem for Linux) | Ubuntu 기반 Linux 커널 가상화 |
+| **Container Engine** | Docker Desktop 4.85.0 | Engine Version 29.6.2 |
+| **IDE / Editor** | Visual Studio Code | Docker / Git Extension 연동 |
+| **CLI Terminal** | PowerShell / Windows Terminal | Git Bash 및 WSL 터미널 환경 |
+| **Version Control** | Git / GitHub | Remote Repository 동기화 완료 |
+
+---
+
+## 🚀 3. Nginx 웹 서버 컨테이너 실행 및 옵션 분석
+
+### 3.1 컨테이너 실행 명령어
 ```bash
 docker run -d -p 80:80 --name my-web-server nginx
 ```
 
+### 3.2 명령어 옵션 상세 설명
+* `docker run`: 이미지를 로컬에서 탐색한 후, 존재하지 않을 경우 Docker Hub에서 다운로드(Pull)하여 새 컨테이너를 생성 및 실행합니다.
+* `-d` (--detach): 백그라운드 모드로 컨테이너를 구동하여 터미널이 세션에 묶이지 않고 독립적으로 실행되도록 합니다.
+* `-p 80:80` (--publish): Host OS의 `80`번 포트 요청을 컨테이너 내부의 `80`번 포트로 포워딩(Port Forwarding)합니다.
+* `--name my-web-server`: 랜덤으로 부여되는 컨테이너 ID 대신 관리하기 쉬운 직관적인 식별자 이름을 지정합니다.
+* `nginx`: 컨테이너를 생성할 기본 이미지명을 지정합니다. 태그 미지정 시 기본값인 `latest` 버전을 불러옵니다.
+
 ---
 
-## 3. Docker 주요 명령어 실행 결과
+## 🔍 4. Docker 주요 명령어 실행 결과 및 상세 분석
 
-### ① `docker version`
+### ① `docker version` (클라이언트 및 서버 버전 확인)
+Docker Client와 Daemon Server의 API 버전, 빌드 날짜, Go 언어 환경 및 아키텍처 정보를 출력합니다.
+
 ```text
 Client:
  Version:           29.6.2
@@ -55,7 +74,11 @@ Server: Docker Desktop 4.85.0 (235549)
   GitCommit:        de40ad0
 ```
 
-### ② `docker info`
+---
+
+### ② `docker info` (시스템 전체 가상화 자원 정보 확인)
+Docker 엔진이 사용할 수 있는 CPU, 메모리, 스토리지 드라이버(overlay2) 및 실행 중인 컨테이너 상태를 점검합니다.
+
 ```text
 Client: Docker Engine - Community
  Version:    29.6.2
@@ -78,14 +101,38 @@ Server:
  Name: docker-desktop
 ```
 
-### ③ `docker images`
+---
+
+### ③ `docker images` (로컬 이미지 저장소 확인)
+다운로드되어 local 레지스트리에 보관되어 있는 Docker 이미지 파일 목록과 용량을 확인합니다.
+
 ```text
 REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
 nginx        latest    21f8c0e3416b   2 weeks ago    187MB
 ```
 
-### ④ `docker ps -a`
+---
+
+### ④ `docker ps -a` (전체 컨테이너 상태 확인)
+현재 구동 중인 컨테이너의 ID, 이미지, 실행 상태(`Up`), 포트 바인딩 상태를 검증합니다.
+
 ```text
 CONTAINER ID   IMAGE   COMMAND                  CREATED          STATUS          PORTS                               NAMES
 a24ddec10034   nginx   "/docker-entrypoint.s…"   12 minutes ago   Up 12 minutes   0.0.0.0:80->80/tcp, [::]:80->80/tcp my-web-server
 ```
+
+---
+
+## 🌐 5. 네트워크 검증 및 동작 원리
+
+### 5.1 웹 브라우저 접속 테스트
+* **접속 주소**: `http://localhost` 또는 `http://127.0.0.1`
+* **접속 결과**: Nginx 기본 안내 페이지(**"Welcome to nginx!"**) 정상 수신 확인
+
+### 5.2 네트워크 흐름 매커니즘
+1. 사용자 브라우저에서 `localhost:80`으로 HTTP 요청 전송
+2. Host OS(Windows 11)의 80번 포트에서 요청 수신
+3. Docker Desktop의 가상 바인딩 포트에 의해 `my-web-server` 컨테이너의 80번 포트로 트래픽 전달
+4. 컨테이너 내부에서 실행 중인 Nginx 프로세스가 `index.html` 문서 응답 반환
+
+---
