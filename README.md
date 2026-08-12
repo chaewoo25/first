@@ -4,7 +4,7 @@
 본 과제는 최신 컨테이너 가상화 기술인 Docker를 활용하여 개발 환경을 구축하고, Nginx 웹 서버 컨테이너를 구동 및 제어하는 기본 실습을 목표로 합니다. WSL 2 기반 가상화 환경에서 Docker Engine 및 VSCode를 연동하고, 핵심 Docker 명령어를 통해 컨테이너 생태계의 동작 메커니즘을 분석 및 기록하였습니다.
 
 - **교육 과정**: 코디세이 AI All-in-One 2기
-- **작성자**: 본인 이름
+- **작성자**:박채우
 - **GitHub 계정**: chaewoo25
 - **저장소 주소**: https://github.com/chaewoo25/ia-codyssey
 
