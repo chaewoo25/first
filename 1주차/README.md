@@ -6,7 +6,7 @@
 - **교육 과정**: 코디세이 AI All-in-One 2기
 - **작성자**: 박채우
 - **GitHub 계정**: chaewoo25
-- **저장소 주소**: https://github.com/chaewoo25/first
+- **저장소 주소**: [https://github.com/chaewoo25/first](https://github.com/chaewoo25/first)
 
 ---
 
@@ -39,6 +39,7 @@ mv sample.txt test_file.txt
 # 4. 파일 및 디렉토리 삭제
 cd .. && rm -rf test_dir
 
+3.2 파일 권한 변경 (chmod) 검증
 # 1. 파일 생성 및 기본 권한 확인
 touch permission_test.sh
 ls -l permission_test.sh
@@ -48,56 +49,23 @@ ls -l permission_test.sh
 chmod 755 permission_test.sh
 ls -l permission_test.sh
 # 출력: -rwxr-xr-x 1 user user 0 permission_test.sh
+
+🚀 4. Docker Engine 및 Hello-World 실행 검증
+```bash
+4.1 docker --version 출력
+docker --version
+# 출력: Docker version 29.6.2, build dfc4efb
+4.2 docker run hello-world 정상 실행
+docker run hello-world
 ```
+🌐 5. Nginx 웹 서버 컨테이너 구동 및 포트 매핑
+```bash
+5.1 컨테이너 실행 명령어 (포트 매핑)
 docker run -d -p 80:80 --name my-web-server nginx
-```
-Client:
- Version:           29.6.2
- API version:       1.55
- Go version:        go1.26.5
- Git commit:        dfc4efb
- Built:             Thu Jul 16 16:14:59 2026
- OS/Arch:           windows/amd64
- Context:           desktop-linux
 
-Server: Docker Desktop 4.85.0 (235549)
- Engine:
-  Version:          29.6.2
-  API version:      1.55 (minimum version 1.40)
-  Go version:       go1.26.5
-  Git commit:       3d80467
-  Built:            Thu Jul 16 16:12:20 2026
-  OS/Arch:          linux/amd64
-```
-  docker run hello-world
-```
-  Client: Docker Engine - Community
- Version:    29.6.2
- Context:    desktop-linux
- Debug Mode: false
+🛠️ 6. Dockerfile 작성 및 커스텀 이미지 빌드
+6.1 Dockerfile 작성
 
-Server:
- Containers: 1
-  Running: 1
-  Paused: 0
-  Stopped: 0
- Images: 1
- Server Version: 29.6.2
- Storage Driver: overlay2
- Operating System: Docker Desktop
- OSType: linux
- Architecture: x86_64
- CPUs: 16
- Total Memory: 15.54GiB
- Name: docker-desktop
-```
- REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
-nginx        latest    21f8c0e3416b   2 weeks ago    187MB
-hello-world  latest    d2c38467ad3d   3 months ago   13.3kB
-```
-CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                               NAMES
-a24ddec10034   nginx     "/docker-entrypoint.s…"   12 minutes ago   Up 12 minutes   0.0.0.0:80->80/tcp, [::]:80->80/tcp my-web-server
-```
 # Base 이미지 설정
 FROM nginx:alpine
 
@@ -107,12 +75,16 @@ COPY index.html /usr/share/nginx/html/index.html
 # 80번 포트 노출
 EXPOSE 80
 ```
+6.2 이미지 빌드 및 매핑 포트 접속
+```bash
 # 1. 커스텀 이미지 빌드
 docker build -t my-custom-nginx:1.0 .
 
 # 2. 빌드된 커스텀 이미지 구동 (포트 8080 매핑)
 docker run -d -p 8080:80 --name custom-web my-custom-nginx:1.0
 ```
+💾 7. Docker Volume을 활용한 데이터 영속성 유지 검증
+```bash
 # 1. 호스트 OS 및 컨테이너 간 볼륨 마운트 실행 (-v 옵션)
 docker run -d -p 8081:80 -v ~/nginx_data:/usr/share/nginx/html --name vol-test nginx
 
@@ -126,19 +98,33 @@ docker rm -f vol-test
 cat ~/nginx_data/test.html
 # 출력 결과: Volume Data Test
 ```
-# 1. 실행 중인 컨테이너 정지 및 삭제
+🧹 8. 이미지 및 컨테이너 목록 확인 및 자원 정리
+```bash
+8.1 목록 확인 (ps -a, images)
+
+# 실행 중 및 정지된 전체 컨테이너 목록 확인
+docker ps -a
+
+# 다운로드 및 빌드된 전체 이미지 목록 확인
+docker images
+
+8.2 자원 정리 (rm, rmi)
+
+# 1. 컨테이너 정지 및 삭제
 docker stop my-web-server custom-web
 docker rm my-web-server custom-web
 
-# 2. 불필요한 이미지 삭제
+# 2. 미사용 이미지 삭제
 docker rmi my-custom-nginx:1.0 hello-world
 ```
+🐙 9. Git 설정 및 GitHub 연동
+```bash
 # 1. Git 사용자 환경 설정
 git config --global user.name "chaewoo25"
 
-# 2. 원격 저장소(first) 연결 및 푸시
-git remote set-url origin [https://github.com/chaewoo25/first.git](https://github.com/chaewoo25/first.git)
+# 2. 원격 저장소(first) 연결 및 최종 푸시
+git remote set-url origin https://github.com/chaewoo25/first.git
 git add .
-git commit -m "docs: 1주차 과제 보고서 완료"
-git push origin main
+git commit -m "docs: 1주차 과제 보고서 9가지 항목 완벽 정리"
+git push origin main --force
 ```
