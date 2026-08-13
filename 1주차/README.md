@@ -49,7 +49,7 @@ ls -l permission_test.sh
 chmod 755 permission_test.sh
 ls -l permission_test.sh
 # 출력: -rwxr-xr-x 1 user user 0 permission_test.sh
-
+```
 🚀 4. Docker Engine 및 Hello-World 실행 검증
 ```bash
 4.1 docker --version 출력
@@ -62,10 +62,10 @@ docker run hello-world
 ```bash
 5.1 컨테이너 실행 명령어 (포트 매핑)
 docker run -d -p 80:80 --name my-web-server nginx
-
+```
 🛠️ 6. Dockerfile 작성 및 커스텀 이미지 빌드
 6.1 Dockerfile 작성
-
+```bash
 # Base 이미지 설정
 FROM nginx:alpine
 
