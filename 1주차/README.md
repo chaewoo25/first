@@ -26,7 +26,7 @@
 ## 📁 3. 리눅스 기본 CLI 명령어 및 파일 권한 실습
 
 ### 3.1 디렉토리 및 파일 생성/이동/삭제
-
+```bash
 # 1. 작업 디렉토리 생성 및 이동
 mkdir -p ~/workspace/test_dir && cd ~/workspace/test_dir
 
