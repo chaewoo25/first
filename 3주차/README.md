@@ -1,8 +1,9 @@
 # 🤖 Mini NPU Simulator: 패턴 매칭 & MAC 연산 시뮬레이터
 
-> **코디세이 AI All-in-One 2기 3주차 과제**  
-> **작성자**: 박채우  
-> **GitHub Repository**: https://github.com/chaewoo25/third
+- **교육 과정**: 코디세이 AI All in One 2기
+- **작성자**: 박채우
+- **GitHub 계정**: chaewoo25
+- **저장소 주소**: https://github.com/chaewoo25/third
 
 ---
 
