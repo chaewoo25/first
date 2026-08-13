@@ -126,3 +126,11 @@
 
 [결과] 총 5문제 중 5문제를 맞혔습니다!
 ```
+---
+
+## 🛠️ Git 저장소 복제 및 동기화 (Clone & Pull)
+
+### 1. 저장소 복제 (Clone)
+```bash
+git clone [https://github.com/chaewoo25/second.git](https://github.com/chaewoo25/second.git)
+cd second/2주차
