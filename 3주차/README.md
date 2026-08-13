@@ -2,7 +2,7 @@
 
 > **코디세이 AI All-in-One 2기 3주차 과제**  
 > **작성자**: 박채우  
-> **GitHub Repository**: [chaewoo25/third](https://github.com/chaewoo25/third)
+> **GitHub Repository**: https://github.com/chaewoo25/third
 
 ---
 
