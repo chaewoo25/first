@@ -129,7 +129,7 @@
 
 ### 🚀 4.2 Git 저장소 복제 및 동기화 (Clone & Pull)
 
-```
+```text
 
 # 1. 원격 저장소 복제 (Clone)
 git clone [https://github.com/chaewoo25/second.git](https://github.com/chaewoo25/second.git)
