@@ -137,3 +137,4 @@ cd second/2주차
 
 # 2. 최신 변경 사항 수신 (Pull)
 git pull origin main
+```
