@@ -125,15 +125,13 @@
 💡 해설: '밀기' 모드는 중앙의 로봇을 상대 진영 쪽으로 멀리 미는 팀이 승리합니다.
 
 [결과] 총 5문제 중 5문제를 맞혔습니다!
-```
 
-```
 ### 🚀 4.2 Git 저장소 복제 및 동기화 (Clone & Pull)
-```
+
+```bash
 # 1. 원격 저장소 복제 (Clone)
-git clone [https://github.com/chaewoo25/second.git](https://github.com/chaewoo25/second.git)
+git clone https://github.com/chaewoo25/second.git
 cd second/2주차
 
 # 2. 최신 변경 사항 수신 (Pull)
 git pull origin main
-```
