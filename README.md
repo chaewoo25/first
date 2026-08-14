@@ -131,7 +131,6 @@
 # 1. 원격 저장소 복제 (Clone)
 git clone [https://github.com/chaewoo25/second.git](https://github.com/chaewoo25/second.git)
 cd second/2주차
-
 # 2. 최신 변경 사항 수신 (Pull)
 git pull origin main
 ```
