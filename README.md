@@ -1,137 +1,164 @@
-# 🎯 코디세이 2주차 과제: 오버워치 CLI 퀴즈 애플리케이션 개발 보고서
-
-본 과제는 파이썬(Python)과 JSON 데이터 구조를 활용하여 제작한 대화형 CLI(Command Line Interface) 퀴즈 프로그램입니다. 오버워치(Overwatch) 게임 관련 퀴즈 수록 및 사용자 상태 관리를 포함합니다.
-
-- **교육 과정**: 코디세이 AI All in One 2기
-- **작성자**: 박채우
-- **GitHub 계정**: chaewoo25
-- **저장소 주소**: https://github.com/chaewoo25/second
-
----
+# 코디세이 1주차 과제: 개발 환경 구축 및 Docker 웹 서버 실습 보고서
 
 ## 📌 1. 과제 개요 (Overview)
+본 과제는 최신 컨테이너 가상화 기술인 Docker를 활용하여 개발 환경을 구축하고, Nginx 웹 서버 컨테이너 구동, 커스텀 이미지 빌드, 데이터 영속성 관리를 포함한 기본 실습을 목표로 합니다. WSL 2 기반 가상화 환경에서 Docker Engine 및 VSCode를 연동하고, 리눅스 기초 CLI 명령어와 핵심 Docker 명령어를 통해 컨테이너 생태계의 동작 메커니즘을 분석 및 기록하였습니다.
 
-| 항목 | 상세 내용 |
+- **교육 과정**: 코디세이 AI All-in-One 2기
+- **작성자**: 박채우
+- **GitHub 계정**: chaewoo25
+- **저장소 주소**: [https://github.com/chaewoo25/first](https://github.com/chaewoo25/first)
+
+---
+
+## 💻 2. 개발 및 실습 환경 (Environment)
+
+| 구분 | 환경 명세 |
 | :--- | :--- |
-| **과제명** | CLI 기반 오버워치 퀴즈 애플리케이션 구축 |
-| **주요 목적** | - Python 구조적 프로그래밍 및 함수 기반 모듈화 구현<br>- JSON 포맷 활용 데이터 영속성 및 사용자 통계 관리<br>- 대화형 CLI 메뉴 구현 및 입력 예외 처리 |
-| **핵심 스택** | Python 3.x, JSON File System, Git / GitHub |
+| **Host OS** | Windows 11 Home |
+| **Virtualization** | WSL 2 (Windows Subsystem for Linux) |
+| **Container Engine** | Docker Desktop 4.85.0 |
+| **IDE / Editor** | Visual Studio Code |
+| **CLI Terminal** | PowerShell / Windows Terminal |
+| **Version Control** | Git / GitHub |
 
 ---
 
-## 🎮 2. 수록 퀴즈 내용 및 예시 (Quiz Content)
+## 📁 3. 리눅스 기본 CLI 명령어 및 파일 권한 실습
 
-본 앱에 실제 수록된 오버워치 관련 퀴즈 문제 및 해설 예시입니다.
-
-### ❓ [문제 1] 지원 영웅 스킬
-- **질문**: 쓰러진 아군 1명을 전장에 즉시 복귀시키는 '부활' 스킬을 가진 지원(힐러) 영웅은?
-- **보기**:
-  1. 루시우
-  2. 메르시
-  3. 아나
-  4. 키리코
-- **정답**: `2번 (메르시)`
-- **해설**: 메르시는 쓰러진 아군을 즉시 부활시키는 능력을 가지고 있습니다.
-
-### ❓ [문제 2] 오버워치 2 전장 모드
-- **질문**: 오버워치 2에서 도입된 모드로, 로봇을 조종해 상대 진영으로 밀고 나가는 전장 모드는?
-- **보기**:
-  1. 밀기(Push)
-  2. 점령(Control)
-  3. 호위(Escort)
-  4. 플래시포인트(Flashpoint)
-- **정답**: `1번 (밀기)`
-- **해설**: '밀기' 모드는 중앙의 로봇을 상대 진영 쪽으로 멀리 미는 팀이 승리합니다.
-
-### ❓ [문제 3] 세계관 및 조직
-- **질문**: 탈론(Talon)은 오버워치 세계관 속 어떤 조직인가요?
-- **정답**: `대표적인 범죄 테러 조직`
-- **해설**: 탈론(Talon)은 오버워치 세계관 속 대표적인 범죄 테러 조직입니다.
-
----
-
-## ⚙️ 3. 핵심 기능 및 로직 구조
-
-### 3.1 프로그램 구조 및 흐름
-```text
-[quiz_app.py 실행]
-       │
-       ▼
-[state.json 데이터 로드] ──(파일 미존재 시)──► [기본 데이터 초기화]
-       │
-       ▼
-[메인 메뉴 출력 (반복문)]
- ├── 1. 퀴즈 풀기 (오버워치 퀴즈 풀이, 채점, 해설 출력, 누적 통계 반영)
- ├── 2. 퀴즈 추가 (지문, 4지선다 보기, 정답, 해설 입력받아 저장)
- ├── 3. 퀴즈 삭제 (목록 선택 삭제 및 JSON 파일 동기화)
- ├── 4. 퀴즈 목록 보기 (전체 문제 지문, 보기 및 정답 조회)
- └── 5. 종료 (최종 데이터 저장 후 안전하게 종료)
- 
- ```
- 🎮 나만의 퀴즈 앱
-====================
-1. 퀴즈 풀기
-2. 퀴즈 추가
-3. 퀴즈 삭제
-4. 퀴즈 목록 보기
-5. 종료
-메뉴를 선택하세요 (1~5): 1
-
-=== 🎯 퀴즈 풀기 ===
-
-[문제 1] 궁극기(황야의 무법자) 사용 시 '석양이 진다...'라는 대사로 유명한 영웅은?
-  1. 캐시디
-  2. 솔저: 76
-  3. 리퍼
-  4. 한조
-정답 번호를 입력하세요 (1~4): 1
-⭕ 정답입니다!
-💡 해설: 캐시디가 궁극기를 사용할 때 출력되는 대표적인 시그니처 대사입니다.
-
-[문제 2] 오버워치의 한국 출신 인기 영웅 D.Va(송하나)의 메인 역할군(Role)은 무엇일까요?
-  1. 돌격(탱커)
-  2. 공격(딜러)
-  3. 지원(힐러)
-  4. 자유
-정답 번호를 입력하세요 (1~4): 1
-⭕ 정답입니다!
-💡 해설: D.Va는 높은 체력과 방어 매트릭스를 활용해 전선을 지키는 돌격 영웅입니다.
-
-[문제 3] 오버워치 조직과 대립하며 리퍼, 둠피스트, 위도우메이커 등이 속해 있는 테러 조직은?
-  1. 탈론
-  2. 블랙워치
-  3. 널 섹터
-  4. 헬스파이어
-정답 번호를 입력하세요 (1~4): 1
-⭕ 정답입니다!
-💡 해설: 탈론(Talon)은 오버워치 세계관 속 대표적인 범죄 테러 조직입니다.
-
-[문제 4] 쓰러진 아군 1명을 전장에 즉시 복귀시키는 '부활' 스킬을 가진 지원(힐러) 영웅은?
-  1. 루시우
-  2. 메르시
-  3. 아나
-  4. 키리코
-정답 번호를 입력하세요 (1~4): 2
-⭕ 정답입니다!
-💡 해설: 메르시는 쓰러진 아군을 즉시 부활시키는 능력을 가지고 있습니다.
-
-[문제 5] 오버워치 2에서 도입된 모드로, 로봇을 조종해 상대 진영으로 밀고 나가는 전장 모드는?
-  1. 밀기(Push)
-  2. 점령(Control)
-  3. 호위(Escort)
-  4. 플래시포인트(Flashpoint)
-정답 번호를 입력하세요 (1~4): 1
-⭕ 정답입니다!
-💡 해설: '밀기' 모드는 중앙의 로봇을 상대 진영 쪽으로 멀리 미는 팀이 승리합니다.
-
-[결과] 총 5문제 중 5문제를 맞혔습니다!
-
-### 🚀 4.2 Git 저장소 복제 및 동기화 (Clone & Pull)
-
+### 3.1 디렉토리 및 파일 생성/이동/삭제
 ```bash
-# 1. 원격 저장소 복제 (Clone)
-git clone https://github.com/chaewoo25/second.git
-cd second/2주차
+# 1. 작업 디렉토리 생성 및 이동
+mkdir -p ~/workspace/test_dir && cd ~/workspace/test_dir
 
-# 2. 최신 변경 사항 수신 (Pull)
-git pull origin main
+# 2. 테스트 파일 생성
+touch sample.txt
+
+# 3. 파일 이동 및 이름 변경
+mv sample.txt test_file.txt
+
+# 4. 파일 및 디렉토리 삭제
+cd .. && rm -rf test_dir
+
+3.2 파일 권한 변경 (chmod) 검증
+# 1. 파일 생성 및 기본 권한 확인
+touch permission_test.sh
+ls -l permission_test.sh
+# 출력: -rw-r--r-- 1 user user 0 permission_test.sh
+
+# 2. 실행 권한 부여 (755 설정)
+chmod 755 permission_test.sh
+ls -l permission_test.sh
+# 출력: -rwxr-xr-x 1 user user 0 permission_test.sh
+
+# 일반 파일 권한 변경 (644 설정)
+chmod 644 sample.txt
+ls -l sample.txt
+# 출력: -rw-r--r-- 1 user user 0 sample.txt
+```
+🚀 4. Docker Engine 및 Hello-World 실행 검증
+```bash
+4.1 docker --version 출력
+docker --version
+# 출력: Docker version 29.6.2, build dfc4efb
+4.2 docker run hello-world 정상 실행
+docker run hello-world
+```
+🌐 5. Nginx 웹 서버 컨테이너 구동 및 포트 매핑
+```bash
+5.1 컨테이너 실행 명령어 (포트 매핑)
+docker run -d -p 80:80 --name my-web-server nginx
+```
+🛠️ 6. Dockerfile 작성 및 커스텀 이미지 빌드
+6.1 Dockerfile 작성
+```bash
+# Base 이미지 설정
+FROM nginx:alpine
+
+# 커스텀 index.html 복사
+COPY index.html /usr/share/nginx/html/index.html
+
+# 80번 포트 노출
+EXPOSE 80
+```
+6.2 이미지 빌드 및 매핑 포트 접속
+```bash
+# 1. 커스텀 이미지 빌드
+docker build -t my-custom-nginx:1.0 .
+
+# 2. 빌드된 커스텀 이미지 구동 (포트 8080 매핑)
+docker run -d -p 8080:80 --name custom-web my-custom-nginx:1.0
+```
+💾 7. Docker Volume을 활용한 데이터 영속성 유지 검증
+```bash
+# 1. 호스트 OS 및 컨테이너 간 볼륨 마운트 실행 (-v 옵션)
+docker run -d -p 8081:80 -v ~/nginx_data:/usr/share/nginx/html --name vol-test nginx
+
+# 2. 호스트 마운트 폴더에 테스트 파일 생성
+echo "Volume Data Test" > ~/nginx_data/test.html
+
+# 3. 컨테이너 강제 삭제
+docker rm -f vol-test
+
+# 4. 데이터 영속성 검증 (컨테이너 삭제 후에도 호스트 폴더 파일 보존 확인)
+cat ~/nginx_data/test.html
+# 출력 결과: Volume Data Test
+```
+🧹 8. 이미지 및 컨테이너 목록 확인 및 자원 정리
+```bash
+8.1 목록 확인 (ps -a, images)
+
+# 실행 중 및 정지된 전체 컨테이너 목록 확인
+docker ps -a
+
+# 다운로드 및 빌드된 전체 이미지 목록 확인
+docker images
+
+8.2 자원 정리 (rm, rmi)
+
+# 1. 컨테이너 정지 및 삭제
+docker stop my-web-server custom-web
+docker rm my-web-server custom-web
+
+# 2. 미사용 이미지 삭제
+docker rmi my-custom-nginx:1.0 hello-world
+```
+🐙 9. Git 설정 및 GitHub 연동
+```bash
+# 1. Git 사용자 환경 설정
+git config --global user.name "chaewoo25"
+
+# 2. 원격 저장소(first) 연결 및 최종 푸시
+git remote set-url origin https://github.com/chaewoo25/first.git
+git add .
+git commit -m "docs: 1주차 과제 보고서 9가지 항목 완벽 정리"
+git push origin main --force
+```
+
+---
+
+## 💡 10. 동작 구조 설계 및 핵심 기술 원리 분석
+
+### 10.1 동작 구조 설계
+* **디렉토리 구조 구성 기준**: 소스 코드(`index.html`), 컨테이너 설정(`Dockerfile`), 설명 문서(`README.md`)를 역할별로 분리하여 유지보수성과 가독성을 높였습니다.
+* **포트/볼륨 재현성 확보**: 컨테이너 실행에 필요한 포트 매핑(`-p 8080:80`)과 볼륨 바인딩(`-v ~/nginx_data:...`) 옵션을 문서에 명시하여 타 환경에서도 동일한 명령어로 실습을 재현할 수 있도록 정리했습니다.
+
+### 10.2 핵심 기술 원리 적용
+
+* **이미지 vs 컨테이너의 차이 (빌드/실행/변경)**
+  * **빌드(Build)**: `Dockerfile`을 기반으로 애플리케이션 실행 환경 전체를 하나의 읽기 전용(Read-Only) 템플릿인 **이미지**로 생성합니다.
+  * **실행(Run)**: 읽기 전용 이미지를 로드하고, 그 위에 읽기/쓰기가 가능한 레이어(Writable Layer)를 얹어 격리된 프로세스로 구동하는 상태가 **컨테이너**입니다.
+  * **변경(Change)**: 컨테이너 내부에서 일어나는 데이터 수정 및 삭제는 컨테이너 레이어에만 남으며, 원본 이미지에는 전혀 영향을 주지 않습니다.
+
+* **컨테이너 포트 격리 및 포트 매핑**
+  * **접속 불가 이유**: 컨테이너는 격리된 자체 네트워크 네임스페이스와 프라이빗 IP를 가지므로 호스트 OS 외부에서 직접 접근할 수 없습니다.
+  * **포트 매핑의 필요성**: 보안을 위해 내부 포트를 격리하되, 외부 통신이 필요한 포트만 선택적으로 호스트 포트와 연결(`-p 호스트포트:컨테이너포트`)하여 안전하게 서비스를 노출하기 위해 필요합니다.
+
+* **절대 경로 vs 상대 경로 선택 기준**
+  * **절대 경로**: 시스템 위치가 명확히 고정되어야 하는 Docker 볼륨 바인딩(`~/nginx_data` 또는 `/usr/share/nginx/html`) 및 시스템 환경변수 설정 시 사용합니다.
+  * **상대 경로**: 프로젝트 내부 파일 참조, 소스 코드 이동 및 다른 환경에서의 실행 시 연동 경로가 깨지지 않아야 하는 상황에서 사용합니다.
+
+
+<img width="1011" height="83" alt="화면 캡처 2026-08-05 164250" src="https://github.com/user-attachments/assets/ef0fb611-b79b-4f0e-b19e-c498bcccc751" />
+<img width="1896" height="111" alt="화면 캡처 2026-08-05 164149" src="https://github.com/user-attachments/assets/f2328c6a-7a44-44df-b9d8-9df8e1c43486" />
+<img width="1590" height="1199" alt="화면 캡처 2026-08-05 164000" src="https://github.com/user-attachments/assets/860ec124-f44e-43a0-bccd-ed3c9b2f5067" />
+<img width="672" height="476" alt="화면 캡처 2026-08-05 163910" src="https://github.com/user-attachments/assets/80750fea-16dc-4cc5-84e9-16f0d88ac688" />
